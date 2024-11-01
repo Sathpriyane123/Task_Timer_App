@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from 'react-router-dom';
 
 export default function Tasklist({ tasks, onDeleteTask, onEditTask }) {
@@ -11,6 +11,23 @@ export default function Tasklist({ tasks, onDeleteTask, onEditTask }) {
     setTaskStatuses(storedStatuses);
   }, []);
 
+  // Define updateTaskStatus with useCallback
+  const updateTaskStatus = useCallback((taskId, status) => {
+    setTaskStatuses((prevStatuses) => {
+      const updatedStatuses = { ...prevStatuses, [taskId]: status };
+      localStorage.setItem("taskStatuses", JSON.stringify(updatedStatuses));
+      return updatedStatuses;
+    });
+  }, []);
+
+  const handleCompleteTask = useCallback((task) => {
+    updateTaskStatus(task.id, "completed");
+    setRemainingTimes((prev) => {
+      const { [task.id]: removedTask, ...rest } = prev;
+      return rest;
+    });
+  }, [updateTaskStatus]);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const updatedRemainingTimes = {};
@@ -20,7 +37,6 @@ export default function Tasklist({ tasks, onDeleteTask, onEditTask }) {
         const dueDate = new Date(`${now.toISOString().split('T')[0]}T${task.timeDue}:00`);
         const scheduledDate = new Date(`${now.toISOString().split('T')[0]}T${task.timeSchedule}:00`);
 
-        // Only update if the task is not completed
         if (taskStatuses[task.id] !== "completed") {
           if (now >= scheduledDate) {
             const remainingTimeInSeconds = Math.max(0, Math.floor((dueDate - now) / 1000));
@@ -28,9 +44,8 @@ export default function Tasklist({ tasks, onDeleteTask, onEditTask }) {
             if (remainingTimeInSeconds > 0) {
               updatedRemainingTimes[task.id] = remainingTimeInSeconds;
             } else {
-              // Mark as failed if time is up
               updateTaskStatus(task.id, "failed");
-              updatedRemainingTimes[task.id] = 0; // Stop the timer at zero
+              updatedRemainingTimes[task.id] = 0;
             }
           }
         }
@@ -44,24 +59,8 @@ export default function Tasklist({ tasks, onDeleteTask, onEditTask }) {
       });
     }, 1000);
 
-    return () => clearInterval(intervalId); // Clean up interval on component unmount
-  }, [tasks, taskStatuses]);
-
-  const updateTaskStatus = (taskId, status) => {
-    setTaskStatuses((prevStatuses) => {
-      const updatedStatuses = { ...prevStatuses, [taskId]: status };
-      localStorage.setItem("taskStatuses", JSON.stringify(updatedStatuses));
-      return updatedStatuses;
-    });
-  };
-
-  const handleCompleteTask = (task) => {
-    updateTaskStatus(task.id, "completed");
-    setRemainingTimes((prev) => {
-      const { [task.id]: removedTask, ...rest } = prev;
-      return rest;
-    });
-  };
+    return () => clearInterval(intervalId);
+  }, [tasks, taskStatuses, updateTaskStatus]);
 
   const formatRemainingTime = (seconds) => {
     if (seconds <= 0) return "Time's up!";
