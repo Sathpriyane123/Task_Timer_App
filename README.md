@@ -12,4 +12,4 @@ Create new employees and assign tasks
 Read and view all employees and their assigned tasks
 Update tasks or employee details as needed
 Delete tasks or employee records for streamlined data management
-This project is an ideal solution for small teams looking to manage tasks, track time, and optimize productivity. Its user-friendly interface makes task tracking simple and effective, while CRUD operations provide full control over task and employee management.
+This project is an ideal solution for small teams looking to manage tasks, track time, and optimize productivity. Its user-friendly interface makes task tracking simple and effective, while CRUD operations provide full control over task and employee management..
