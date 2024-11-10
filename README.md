@@ -1,9 +1,15 @@
-This Timer Task Manager is a dynamic application built with React, designed to streamline task management with real-time status tracking for employees. The app leverages React props to pass data efficiently between components, creating a smooth and responsive user experience.
+Timer Task Manager Application with CRUD Operations
+This Timer Task Manager is a versatile application built with React, designed to manage tasks and employee productivity through real-time tracking and seamless CRUD (Create, Read, Update, Delete) operations. Using React props to pass data between components, the app provides a responsive and dynamic experience for managing employees and their assigned tasks.
 
 Key Features:
+Employee Management with Task Assignment: Register employees, assign tasks with specific start and end times, and easily manage task assignments. The employee list shows the current task status for each employee, keeping the team organized and tasks on track.
 
-Employee Registration & Task Assignment: Easily register new employees and assign tasks with specific start and end times. Each employee is listed with their assigned tasks and current task status, ensuring clear and organized task management.
+Real-Time Task Status Updates: As tasks begin, status updates automatically to "In Progress." Employees can mark tasks as "Completed" by clicking the button before the timer expires. If the task time runs out, the status updates to "Failed," while unstarted tasks remain marked as "To-Do."
 
-Real-Time Task Status Updates: Task status updates in real time! When a task's timer starts, the status updates to "In Progress." If the employee completes the task by clicking the "Complete" button before the timer ends, the status changes to "Completed." If time runs out before completion, the status is marked as "Failed." For unstarted tasks, the status remains as "To-Do."
+Comprehensive CRUD Operations: Easily manage your employee and task data with full CRUD capabilities:
 
-This project offers a clear, organized view of tasks and employee productivity, ideal for managing workflows in small teams. It’s simple, efficient, and a perfect React-based solution for task and time management.
+Create new employees and assign tasks
+Read and view all employees and their assigned tasks
+Update tasks or employee details as needed
+Delete tasks or employee records for streamlined data management
+This project is an ideal solution for small teams looking to manage tasks, track time, and optimize productivity. Its user-friendly interface makes task tracking simple and effective, while CRUD operations provide full control over task and employee management.
